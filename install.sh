@@ -6,6 +6,7 @@ echo "[INFO] Installer will exit on error."
 
 handle_error() {
 	echo "[ERR] An error occurred on line $1."
+	rm -rf tmp
 	exit 1
 }
 
@@ -37,6 +38,7 @@ else
 	echo "[INFO] Starting kitty installation!"
 	curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
 	echo "[INFO] Finished kitty installation!"
+	mkdir -p ~/.local/bin ~/.local/share/applications
 	# Create symbolic links to add kitty and kitten to PATH (assuming ~/.local/bin is in
 	# your system-wide PATH)
 	ln -sf ~/.local/kitty.app/bin/kitty ~/.local/kitty.app/bin/kitten ~/.local/bin/
@@ -78,6 +80,7 @@ else
 	echo "[INFO] Downloaded Hack.zip under ./tmp/"
 	unzip tmp/Hack.zip -d tmp
 	echo "[INFO] Unpacked Hack.zip under ./tmp/"
+	mkdir -p ~/.local/share/fonts
 	mv tmp/HackNerdFont-*.ttf ~/.local/share/fonts
 	echo "[INFO] Finished loca HackNerdFont installation!"
 	fc-cache -f
@@ -123,8 +126,9 @@ echo
 
 echo "[INFO] Copying dotfiles to $HOME."
 echo "[INFO] Previous directory structure is:"
+which tree || (echo "[INFO] tree not found, installing." && sudo apt install tree)
 tree -al $HOME
-cp --parents -r $(find ( ! -path "./.git" ) -and ( ! -path "./install.sh" ) -and ( ! -path "./README.md" ) .) $HOME
+cp --parents -r $(find -not -path "./.git" -and -not -path "./install.sh" -and -not -path "./README.md") $HOME
 echo "[INFO] Copied dotfiles to $HOME."
 echo "[INFO] Modified directory structure is:"
 tree -al $HOME
