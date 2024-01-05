@@ -2,6 +2,15 @@
 
 echo "[INFO] Starting installer!"
 
+echo "[INFO] Installer will exit on error."
+
+handle_error() {
+	echo "[ERR] An error occurred on line $1."
+	exit 1
+}
+
+trap 'handle_error $LINENO' ERR
+
 echo "[INFO] Making temporary directory ./tmp"
 mkdir tmp
 
@@ -16,7 +25,6 @@ else
 	unzip tmp/xrdp-installer.zip -d tmp
 	echo "[INFO] Unpacked xrdp-installer.zip under ./tmp/"
 	chmod +x tmp/xrdp-installer*.sh
-	tmp/xrdp-installer*.sh
 	echo "[INFO] Finished xrdp installation!"
 fi
 
