@@ -12,7 +12,7 @@ handle_error() {
 
 trap 'handle_error $LINENO' ERR
 
-echo "[INFO] Making temporary directory ./tmp"
+echo "[INFO] Making temporary directory ./tmp/"
 mkdir tmp
 
 if (which curl > /dev/null 2>&1); then
@@ -132,5 +132,14 @@ cp --parents -r $(find -not -path "./.git" -and -not -path "./install.sh" -and -
 echo "[INFO] Copied dotfiles to $HOME."
 echo "[INFO] Modified directory structure is:"
 tree -al $HOME
+
+echo
+echo
+
+rm -rf ./tmp
+echo "[INFO] Removed temporary directory ./tmp/"
+
+echo
+echo
 
 echo "[INFO] Finished installer!"
