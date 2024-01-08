@@ -124,6 +124,26 @@ fi
 echo
 echo
 
+if (which nvim > /dev/null 2>1&); then
+	echo "[INFO] neovim already installed, passing."
+else
+	echo "[INFO] Starting neovim installation!"
+	echo "[INFO] Installing build prerequisites."
+	sudo apt-get install ninja-build gettext cmake unzip curl
+	echo "[INFO] Finished installing build prerequisites."
+	git clone https://github.com/neovim/neovim
+	cd neovim
+	make CMAKE_BUILD_TYPE=Release
+	git checkout stable
+	cd build
+	cpack -G DEB
+	sudo dpkg -i nvim-linux64.deb
+	echo "[INFO] Finished neovim installation."
+fi
+
+echo
+echo
+
 echo "[INFO] Copying dotfiles to $HOME."
 echo "[INFO] Previous directory structure is:"
 which tree || (echo "[INFO] tree not found, installing." && sudo apt install tree)
