@@ -15,6 +15,23 @@ trap 'handle_error $LINENO' ERR
 echo "[INFO] Making temporary directory ./tmp/"
 mkdir tmp
 
+if (which syncthing > /dev/null 2>&1); then
+	echo "[INFO] syncthing already installed, passing."
+else
+	echo "[INFO] Starting syncthing installation!"
+ 	which curl || (echo "[INFO] curl not found, installing." && sudo apt install curl)
+  	sudo mkdir -p /etc/apt/keyrings
+   	sudo curl -L -o /etc/apt/keyrings/syncthing-archive-keyring.gpg https://syncthing.net/release-key.gpg
+    	echo "deb [signed-by=/etc/apt/keyrings/syncthing-archive-keyring.gpg] https://apt.syncthing.net/ syncthing stable" | sudo tee /etc/apt/sources.list.d/syncthing.list
+     	sudo apt-get update
+	sudo apt-get install syncthing
+ 	echo "[INFO] Finished syncthing installation!"
+fi
+
+echo
+echo
+ 	
+
 if (which curl > /dev/null 2>&1); then
 	echo "[INFO] xrdp already installed, passing."
 else
@@ -36,6 +53,7 @@ if (which kitty > /dev/null 2>&1); then
 	echo "[INFO] kitty already installed, passing."
 else
 	echo "[INFO] Starting kitty installation!"
+ 	which curl || (echo "[INFO] curl not found, installing." && sudo apt install curl)
 	curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
 	echo "[INFO] Finished kitty installation!"
 	mkdir -p ~/.local/bin ~/.local/share/applications
@@ -76,6 +94,7 @@ if (fc-list | grep HackNerdFont > /dev/null 2>&1); then
 	echo "[INFO] HackNerdFont already installed, passing."
 else
 	echo "[INFO] Starting HackNerdFont installation!"
+ 	which curl || (echo "[INFO] curl not found, installing." && sudo apt install curl)
 	curl -L --output tmp/Hack.zip https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/Hack.zip
 	echo "[INFO] Downloaded Hack.zip under ./tmp/"
 	unzip tmp/Hack.zip -d tmp
@@ -95,6 +114,7 @@ if (which starship > /dev/null 2>&1); then
 	echo "[INFO] starship already installed, passing."
 else
 	echo "[INFO] Starting starship installation!"
+ 	which curl || (echo "[INFO] curl not found, installing." && sudo apt install curl)
 	curl -sS https://starship.rs/install.sh | sh
 	echo "[INFO] Finished starship installation!"
 fi
@@ -157,6 +177,10 @@ tree -al $HOME
 
 echo
 echo
+
+echo "[INFO] Starting syncthing service."
+systemctl --user enable syncthing.service
+systemctl --user start syncthing.service
 
 rm -rf ./tmp
 echo "[INFO] Removed temporary directory ./tmp/"
