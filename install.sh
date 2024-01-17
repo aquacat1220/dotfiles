@@ -32,7 +32,7 @@ echo
 echo
  	
 
-if (which curl > /dev/null 2>&1); then
+if (which xrdp > /dev/null 2>&1); then
 	echo "[INFO] xrdp already installed, passing."
 else
 	echo "[INFO] Starting xrdp installation!"
@@ -133,7 +133,7 @@ fi
 echo
 echo
 
-if (ls ~/.tmux/plugins/ | grep tpm > /dev/null 2>&1); then
+if (ls ~/.tmux/plugins/tpm > /dev/null 2>&1); then
 	echo "[INFO] tpm already installed, passing."
 else
 	echo "[INFO] Starting tpm installation!"
@@ -170,7 +170,7 @@ echo "[INFO] Copying dotfiles to $HOME."
 echo "[INFO] Previous directory structure is:"
 which tree || (echo "[INFO] tree not found, installing." && sudo apt install tree)
 tree -al $HOME
-cp --parents -r $(find -not -path "./.git" -and -not -path "./install.sh" -and -not -path "./README.md" -and -not -path "./tmp*") $HOME
+cp --parents -r $(find -not -path "./.git*" -and -not -path "./install.sh" -and -not -path "./README.md" -and -not -path "./tmp*") $HOME
 echo "[INFO] Copied dotfiles to $HOME."
 echo "[INFO] Modified directory structure is:"
 tree -al $HOME
