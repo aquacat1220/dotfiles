@@ -43,6 +43,7 @@ else
 	unzip tmp/xrdp-installer.zip -d tmp
 	echo "[INFO] Unpacked xrdp-installer.zip under ./tmp/"
 	chmod +x tmp/xrdp-installer*.sh
+	./xrdp-installer*.sh
 	echo "[INFO] Finished xrdp installation!"
 fi
 
