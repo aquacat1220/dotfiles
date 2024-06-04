@@ -157,7 +157,7 @@ echo "[INFO] Copying dotfiles to $HOME."
 echo "[INFO] Previous directory structure is:"
 which tree || (echo "[INFO] tree not found, installing." && sudo apt install tree)
 tree -al $HOME
-cp --parents -r $(find -not -path "./.git*" -and -not -path "./install.sh" -and -not -path "./README.md" -and -not -path "./tmp*") $HOME
+cp --parents $(find -not -path "./.git*" -and -not -path "./install.sh" -and -not -path "./README.md" -and -not -path "./tmp*") $HOME
 echo "[INFO] Copied dotfiles to $HOME."
 echo "[INFO] Modified directory structure is:"
 tree -al $HOME
