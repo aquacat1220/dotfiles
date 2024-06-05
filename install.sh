@@ -69,6 +69,8 @@ else
 	sed -i "s|Icon=kitty|Icon=/home/$USER/.local/kitty.app/share/icons/hicolor/256x256/apps/kitty.png|g" ~/.local/share/applications/kitty*.desktop
 	sed -i "s|Exec=kitty|Exec=/home/$USER/.local/kitty.app/bin/kitty|g" ~/.local/share/applications/kitty*.desktop
 	echo "[INFO] Finished kitty desktop integration."
+	sudo update-alternatives --install /usr/bin/x-terminal-emulator x-terminal-emulator (which kitty) 50
+	echo "[INFO] Set kitty as the default terminal."
 fi
 
 echo
@@ -157,7 +159,14 @@ echo "[INFO] Copying dotfiles to $HOME."
 echo "[INFO] Previous directory structure is:"
 which tree || (echo "[INFO] tree not found, installing." && sudo apt install tree)
 tree -al $HOME
-cp --parents $(find -not -path "./.git*" -and -not -path "./install.sh" -and -not -path "./README.md" -and -not -path "./tmp*") $HOME
+cd overwrite
+cp --parents $(find) $HOME
+cd ..
+cd append
+while read line; do
+	cat $line >> $HOME/$line
+done < <(find -type f)
+cd ..
 echo "[INFO] Copied dotfiles to $HOME."
 echo "[INFO] Modified directory structure is:"
 tree -al $HOME
