@@ -16,7 +16,7 @@ echo "[INFO] Making temporary directory ./tmp/"
 mkdir tmp
 
 echo "[INFO] Starting language installation!"
-sudo apt-get install -y $(check-language-support -l kr)
+sudo apt-get install -y $(check-language-support -l ko)
 echo "[INFO] Finished language installation!"
 
 if (which syncthing > /dev/null 2>&1); then
@@ -165,7 +165,7 @@ echo "[INFO] Previous directory structure is:"
 which tree || (echo "[INFO] tree not found, installing." && sudo apt-get install -y tree)
 tree -al $HOME
 cd overwrite
-cp --parents $(find) $HOME
+cp -r --parents $(find) $HOME
 cd ..
 cd append
 while read line; do
