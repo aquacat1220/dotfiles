@@ -69,7 +69,7 @@ else
 	sed -i "s|Icon=kitty|Icon=/home/$USER/.local/kitty.app/share/icons/hicolor/256x256/apps/kitty.png|g" ~/.local/share/applications/kitty*.desktop
 	sed -i "s|Exec=kitty|Exec=/home/$USER/.local/kitty.app/bin/kitty|g" ~/.local/share/applications/kitty*.desktop
 	echo "[INFO] Finished kitty desktop integration."
-	sudo update-alternatives --install /usr/bin/x-terminal-emulator x-terminal-emulator (which kitty) 50
+	sudo update-alternatives --install /usr/bin/x-terminal-emulator x-terminal-emulator $(which kitty) 50
 	echo "[INFO] Set kitty as the default terminal."
 fi
 
