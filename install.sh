@@ -15,16 +15,20 @@ trap 'handle_error $LINENO' ERR
 echo "[INFO] Making temporary directory ./tmp/"
 mkdir tmp
 
+echo "[INFO] Starting language installation!"
+sudo apt-get install -y $(check-language-support -l kr)
+echo "[INFO] Finished language installation!"
+
 if (which syncthing > /dev/null 2>&1); then
 	echo "[INFO] syncthing already installed, passing."
 else
 	echo "[INFO] Starting syncthing installation!"
- 	which curl || (echo "[INFO] curl not found, installing." && sudo apt install curl)
+ 	which curl || (echo "[INFO] curl not found, installing." && sudo apt-get install -y curl)
   	sudo mkdir -p /etc/apt/keyrings
    	sudo curl -L -o /etc/apt/keyrings/syncthing-archive-keyring.gpg https://syncthing.net/release-key.gpg
     	echo "deb [signed-by=/etc/apt/keyrings/syncthing-archive-keyring.gpg] https://apt.syncthing.net/ syncthing stable" | sudo tee /etc/apt/sources.list.d/syncthing.list
      	sudo apt-get update
-	sudo apt-get install syncthing
+	sudo apt-get install -y syncthing
  	echo "[INFO] Finished syncthing installation!"
 fi
 
@@ -36,10 +40,10 @@ if (which xrdp > /dev/null 2>&1); then
 	echo "[INFO] xrdp already installed, passing."
 else
 	echo "[INFO] Starting xrdp installation!"
-	which curl || (echo "[INFO] curl not found, installing." && sudo apt install curl)
+	which curl || (echo "[INFO] curl not found, installing." && sudo apt-get install -y curl)
 	curl -L --output tmp/xrdp-installer.zip https://www.c-nergy.be/downloads/xRDP/xrdp-installer-1.4.8.zip
 	echo "[INFO] Downloaded xrdp-installer.zip under ./tmp/"
-	which unzip || (echo  "[INFO] unzip not found, installing." && sudo apt install unzip)
+	which unzip || (echo  "[INFO] unzip not found, installing." && sudo apt-get install -y unzip)
 	unzip tmp/xrdp-installer.zip -d tmp
 	echo "[INFO] Unpacked xrdp-installer.zip under ./tmp/"
 	chmod +x tmp/xrdp-installer*.sh
@@ -54,10 +58,11 @@ if (which kitty > /dev/null 2>&1); then
 	echo "[INFO] kitty already installed, passing."
 else
 	echo "[INFO] Starting kitty installation!"
- 	which curl || (echo "[INFO] curl not found, installing." && sudo apt install curl)
+ 	which curl || (echo "[INFO] curl not found, installing." && sudo apt-get install -y curl)
 	curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
 	echo "[INFO] Finished kitty installation!"
 	mkdir -p ~/.local/bin ~/.local/share/applications
+ 	export PATH=$PATH:~/.local/bin
 	# Create symbolic links to add kitty and kitten to PATH (assuming ~/.local/bin is in
 	# your system-wide PATH)
 	ln -sf ~/.local/kitty.app/bin/kitty ~/.local/kitty.app/bin/kitten ~/.local/bin/
@@ -69,7 +74,7 @@ else
 	sed -i "s|Icon=kitty|Icon=/home/$USER/.local/kitty.app/share/icons/hicolor/256x256/apps/kitty.png|g" ~/.local/share/applications/kitty*.desktop
 	sed -i "s|Exec=kitty|Exec=/home/$USER/.local/kitty.app/bin/kitty|g" ~/.local/share/applications/kitty*.desktop
 	echo "[INFO] Finished kitty desktop integration."
-	sudo update-alternatives --install /usr/bin/x-terminal-emulator x-terminal-emulator $(which kitty) 50
+	sudo update-alternatives --install /usr/bin/x-terminal-emulator x-terminal-emulator ~/.local/bin/kitty 50
 	echo "[INFO] Set kitty as the default terminal."
 fi
 
@@ -82,7 +87,7 @@ else
 	echo "[INFO] Starting fish installation!"
 	sudo apt-add-repository ppa:fish-shell/release-3
 	sudo apt update
-	sudo apt install fish
+	sudo apt-get install -y fish
 	echo "[INFO] Setting fish as the default shell."
 	chsh -s $(which fish)
 	echo "[INFO] Finished fish installation!"
@@ -91,12 +96,12 @@ fi
 echo
 echo
 
-which fc-list || (echo "[INFO] fc-list not found, installing." && sudo apt install fontconfig)
+which fc-list || (echo "[INFO] fc-list not found, installing." && sudo apt-get install -y fontconfig)
 if (fc-list | grep HackNerdFont > /dev/null 2>&1); then
 	echo "[INFO] HackNerdFont already installed, passing."
 else
 	echo "[INFO] Starting HackNerdFont installation!"
- 	which curl || (echo "[INFO] curl not found, installing." && sudo apt install curl)
+ 	which curl || (echo "[INFO] curl not found, installing." && sudo apt-get install -y curl)
 	curl -L --output tmp/Hack.zip https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/Hack.zip
 	echo "[INFO] Downloaded Hack.zip under ./tmp/"
 	unzip tmp/Hack.zip -d tmp
@@ -116,7 +121,7 @@ if (which starship > /dev/null 2>&1); then
 	echo "[INFO] starship already installed, passing."
 else
 	echo "[INFO] Starting starship installation!"
- 	which curl || (echo "[INFO] curl not found, installing." && sudo apt install curl)
+ 	which curl || (echo "[INFO] curl not found, installing." && sudo aptget install -y curl)
 	curl -sS https://starship.rs/install.sh | sh
 	echo "[INFO] Finished starship installation!"
 fi
@@ -128,7 +133,7 @@ if (which tmux > /dev/null 2>&1); then
 	echo "[INFO] tmux already installed, passing."
 else
 	echo "[INFO] Starting tmux installation!"
-	sudo apt install tmux
+	sudo apt-get install -y tmux
 	echo "[INFO] Finished tmux installation!"
 fi
 
@@ -157,7 +162,7 @@ echo
 
 echo "[INFO] Copying dotfiles to $HOME."
 echo "[INFO] Previous directory structure is:"
-which tree || (echo "[INFO] tree not found, installing." && sudo apt install tree)
+which tree || (echo "[INFO] tree not found, installing." && sudo apt-get install -y tree)
 tree -al $HOME
 cd overwrite
 cp --parents $(find) $HOME
