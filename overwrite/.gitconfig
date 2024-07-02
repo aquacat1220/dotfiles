@@ -1,0 +1,6 @@
+[credential]
+	credentialStore = gpg
+	helper = 
+	helper = /usr/local/bin/git-credential-manager
+[init]
+	defaultBranch = main
