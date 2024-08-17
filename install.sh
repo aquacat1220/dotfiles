@@ -160,6 +160,13 @@ fi
 echo
 echo
 
+echo "[INFO] Disabling mouse acceleration."
+gsettings set org.gnome.desktop.peripherals.mouse accel-profile flat
+echo "[INFO] Disabled mouse acceleration."
+
+echo
+echo
+
 echo "[INFO] Copying dotfiles to $HOME."
 echo "[INFO] Previous directory structure is:"
 which tree || (echo "[INFO] tree not found, installing." && sudo apt-get install -y tree)
