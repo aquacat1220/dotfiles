@@ -129,7 +129,8 @@ fi
 echo
 echo
 
-if (which tmux > /dev/null 2>&1); then
+# if (which tmux > /dev/null 2>&1); then
+if (true); then
 	echo "[INFO] tmux already installed, passing."
 else
 	echo "[INFO] Starting tmux installation!"
@@ -140,7 +141,8 @@ fi
 echo
 echo
 
-if (ls ~/.tmux/plugins/tpm > /dev/null 2>&1); then
+# if (ls ~/.tmux/plugins/tpm > /dev/null 2>&1); then
+if (true); then
 	echo "[INFO] tpm already installed, passing."
 else
 	echo "[INFO] Starting tpm installation!"
@@ -174,7 +176,8 @@ tree -al $HOME
 cd overwrite
 cp -r --parents $(find) $HOME
 cd ..
-if (cd append) then;
+if (cd append); then
+	cd append
 	while read line; do
 		cat $line >> $HOME/$line
 	done < <(find -type f)
