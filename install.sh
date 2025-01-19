@@ -174,11 +174,12 @@ tree -al $HOME
 cd overwrite
 cp -r --parents $(find) $HOME
 cd ..
-cd append
-while read line; do
-	cat $line >> $HOME/$line
-done < <(find -type f)
-cd ..
+if (cd append) then;
+	while read line; do
+		cat $line >> $HOME/$line
+	done < <(find -type f)
+	cd ..
+ fi
 echo "[INFO] Copied dotfiles to $HOME."
 echo "[INFO] Modified directory structure is:"
 tree -al $HOME
