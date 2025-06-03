@@ -102,9 +102,23 @@ echo "[INFO] Removed temporary directory ./tmp/"
 echo
 echo
 
-echo "[INFO] Clone this repo to ~."
+echo "[INFO] cd-ing into ~."
 cd ~
-git clone https://github.com/aquacat1220/dotfiles.git
+
+echo
+echo
+
+if ([ -d "dotfiles" ]); then
+	echo "[INFO] dotfiles repo is already cloned, and this run is likely occuring inside it."
+else
+	echo "[INFO] Clone this repo to ~."
+	git clone https://github.com/aquacat1220/dotfiles.git
+fi
+
+echo
+echo
+
+echo "[INFO] cd-ing into dotfiles."
 cd dotfiles
 
 echo
