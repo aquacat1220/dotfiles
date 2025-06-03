@@ -24,7 +24,7 @@ cd tmp
 echo
 echo
 
-if ([ -e was_bootstrapped ]); then
+if ([ -e "../was_bootstrapped" ]); then
   echo "[INFO] Bootstrapper already ran on this machine."
 else
   sudo apt-get update
