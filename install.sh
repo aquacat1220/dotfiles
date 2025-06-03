@@ -204,7 +204,7 @@ fi
 echo
 echo
 
-if (which code > /dev/null 2>1&); then
+if (which code > /dev/null 2>&1); then
 	echo "[INFO] code already installed, passing."
 else
 	echo "[INFO] Starting code installation!"
@@ -223,7 +223,7 @@ fi
 echo
 echo
 
-if (which obsidian > /dev/null 2>1&); then
+if (which obsidian > /dev/null 2>&1); then
 	echo "[INFO] obsidian already installed, passing."
 else
 	echo "[INFO] Starting obsidian installation!"
