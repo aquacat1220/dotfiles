@@ -92,4 +92,10 @@ echo "[INFO] Removed temporary directory ./tmp/"
 echo
 echo
 
+touch was_bootstrapped
+echo "[INFO] Remember we've bootstrapped this machine."
+
+echo
+echo
+
 echo "[INFO] Finished bootstrapper!"
