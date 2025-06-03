@@ -89,7 +89,7 @@ else
 
  	if (which git-credential-manager > /dev/null 2>1&); then
   		echo "[INFO] gcm already installed, passing."
-    		git-credential-manager congifure
+    		git-credential-manager configure
     	else
 		echo "[INFO] Starting gcm installation!"
 	 	echo "[INFO] Go to "https://github.com/git-ecosystem/git-credential-manager/releases/latest" and download the latest dpkg under ./tmp/"
