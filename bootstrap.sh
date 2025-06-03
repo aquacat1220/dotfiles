@@ -87,7 +87,7 @@ else
 	echo
 	echo
 
- 	if (which git-credential-manager > /dev/null 2>1&); then
+ 	if (which git-credential-manager > /dev/null 2>&1); then
   		echo "[INFO] gcm already installed, passing."
     		git-credential-manager configure
     	else
