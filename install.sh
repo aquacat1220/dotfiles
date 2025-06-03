@@ -5,10 +5,12 @@ echo "[INFO] Starting installer!"
 echo
 echo
 
-echo "[INFO] Installer will exit on error."
+dotfiles_root=$(pwd)
+
+echo "[INFO] Bootstrapper will exit on error."
 handle_error() {
 	echo "[ERR] An error occurred on line $1."
-	rm -rf tmp
+	rm -rf $dotfiles_root/tmp
 	exit 1
 }
 trap 'handle_error $LINENO' ERR
