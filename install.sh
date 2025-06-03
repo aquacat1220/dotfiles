@@ -231,6 +231,7 @@ else
 	read -p "[INFO] Press Enter when ready."
 	sudo dpkg -i obsidian*.deb 
 	echo "[INFO] Finished obsidian installation!"
+fi
 
 echo
 echo
