@@ -41,15 +41,8 @@ else
 
 	echo
 	echo
-	
-	echo "[INFO] Creating gpg key. Remember the ID."
-	gpg --gen-key
-	echo "[INFO] Created gpg key."
-	
-	echo
-	echo
-
-	if (which pass > /dev/null 2>&1); then
+ 
+ 	if (which pass > /dev/null 2>&1); then
 		echo "[INFO] pass already installed, passing."
 	else
 		echo "[INFO] Starting pass installation!"
@@ -57,11 +50,22 @@ else
 		echo "[INFO] Finished pass installation!"
 	fi
 
-	echo "[INFO] Initializing pass."
-	read -p "Enter the gpg ID used before: " gpg_id
-	pass init $gpg_id
-	echo "[INFO] Initialized pass."
+ 	if (pass > /dev/null 2>&1); then
+  		echo "[INFO] pass is already initialized, meaning gpg must be installed too."
+    	else
+     		echo "[INFO] Creating gpg key. Remember the ID."
+		gpg --gen-key
+		echo "[INFO] Created gpg key."
+		
+		echo
+		echo
 	
+		echo "[INFO] Initializing pass."
+		read -p "Enter the gpg ID used before: " gpg_id
+		pass init $gpg_id
+		echo "[INFO] Initialized pass."
+  	fi
+		
 	echo
 	echo
 	
@@ -82,14 +86,19 @@ else
 
 	echo
 	echo
-	
-	echo "[INFO] Starting gcm installation!"
- 	echo "[INFO] Go to "https://github.com/git-ecosystem/git-credential-manager/releases/latest" and download the latest dpkg under ./tmp/"
-  	read -p "[INFO] Press Enter when ready."
-   	sudo dpkg -i gcm-linux_amd64.*.deb 
-	git-credential-manager configure
-	echo "[INFO] Finished gcm installation and configuration!"
-	
+
+ 	if (which git-credential-manager > /dev/null 2>1&); then
+  		echo "[INFO] gcm already installed, passing."
+    		git-credential-manager congifure
+    	else
+		echo "[INFO] Starting gcm installation!"
+	 	echo "[INFO] Go to "https://github.com/git-ecosystem/git-credential-manager/releases/latest" and download the latest dpkg under ./tmp/"
+	  	read -p "[INFO] Press Enter when ready."
+	   	sudo dpkg -i gcm-linux_amd64.*.deb 
+		git-credential-manager configure
+		echo "[INFO] Finished gcm installation and configuration!"
+	fi
+ 
 	echo
 	echo
 fi
