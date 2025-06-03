@@ -102,8 +102,16 @@ echo "[INFO] Removed temporary directory ./tmp/"
 echo
 echo
 
+echo "[INFO] Clone this repo to ~."
+cd ~
+git clone https://github.com/aquacat1220/dotfiles.git
+cd dotfiles
+
+echo
+echo
+
 touch was_bootstrapped
-echo "[INFO] Remember we've bootstrapped this machine."
+echo "[INFO] Remembered we've bootstrapped this machine."
 
 echo
 echo
