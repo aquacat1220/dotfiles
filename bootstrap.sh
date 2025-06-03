@@ -92,7 +92,7 @@ else
     		git-credential-manager configure
     	else
 		echo "[INFO] Starting gcm installation!"
-	 	echo "[INFO] Go to "https://github.com/git-ecosystem/git-credential-manager/releases/latest" and download the latest dpkg under ./tmp/"
+	 	echo "[INFO] Go to "https://github.com/git-ecosystem/git-credential-manager/releases/latest" and download the latest .deb under ./tmp/"
 	  	read -p "[INFO] Press Enter when ready."
 	   	sudo dpkg -i gcm-linux_amd64.*.deb 
 		git-credential-manager configure

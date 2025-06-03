@@ -223,6 +223,18 @@ fi
 echo
 echo
 
+if (which obsidian > /dev/null 2>1&); then
+	echo "[INFO] obsidian already installed, passing."
+else
+	echo "[INFO] Starting obsidian installation!"
+	echo "[INFO] Go to "https://obsidian.md/download" and download the latest .deb under ./tmp/"
+	read -p "[INFO] Press Enter when ready."
+	sudo dpkg -i obsidian*.deb 
+	echo "[INFO] Finished obsidian installation!"
+
+echo
+echo
+
 echo "[INFO] Removing all unofficial docker packages."
 for pkg in docker.io docker-doc docker-compose docker-compose-v2 podman-docker containerd runc; do
 	(sudo apt-get remove $pkg) || true
