@@ -241,6 +241,39 @@ fi
 echo
 echo
 
+echo "[INFO] Installing latest drivers."
+sudo apt-get update
+sudo apt-get upgrade -y
+sudo ubuntu-drivers install
+echo "[INFO] Installed latest drivers."
+
+echo
+echo
+
+if (dpkg -l nvidia-container-toolkit > /dev/null 2>&1); then
+	echo "[INFO] nvidia container toolkit. already installed, passing."
+else
+	echo "[INFO] Installing nvidia container toolkit."
+	curl -fsSL https://nvidia.github.io/libnvidia-container/gpgkey | sudo gpg --dearmor -o /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg \
+	  && curl -s -L https://nvidia.github.io/libnvidia-container/stable/deb/nvidia-container-toolkit.list | \
+	    sed 's#deb https://#deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://#g' | \
+	    sudo tee /etc/apt/sources.list.d/nvidia-container-toolkit.list
+	sudo apt-get update
+	sudo apt-get install -y nvidia-container-toolkit
+	echo "[INFO] Installed nvidia container toolkit."
+fi
+
+echo
+echo
+
+echo "[INFO] Configuring docker with nvidia container toolkit."
+sudo nvidia-ctk runtime configure --runtime=docker
+sudo systemctl restart docker
+echo "[INFO] Configured docker with nvidia container toolkit."
+
+echo
+echo
+
 echo "[INFO] Disabling mouse acceleration."
 gsettings set org.gnome.desktop.peripherals.mouse accel-profile flat
 echo "[INFO] Disabled mouse acceleration."
