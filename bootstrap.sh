@@ -127,7 +127,7 @@ fi
 echo
 echo
 
-echo "[INFO] cd-ing into dotfiles."
+echo "[INFO] cd-ing into ~/dotfiles/"
 cd dotfiles
 
 echo
