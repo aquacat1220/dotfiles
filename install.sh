@@ -7,7 +7,7 @@ echo
 
 dotfiles_root=$(pwd)
 
-echo "[INFO] Bootstrapper will exit on error."
+echo "[INFO] Installer will exit on error."
 handle_error() {
 	echo "[ERR] An error occurred on line $1."
 	rm -rf $dotfiles_root/tmp
@@ -55,6 +55,14 @@ else
 	sudo apt-get install -y syncthing
  	echo "[INFO] Finished syncthing installation!"
 fi
+
+echo
+echo
+
+echo "[INFO] Starting syncthing service."
+systemctl --user enable syncthing.service
+systemctl --user start syncthing.service
+echo "[INFO] Started syncthing service."
 
 echo
 echo
@@ -196,9 +204,42 @@ fi
 echo
 echo
 
-if ([ -e "../was_installed" ]); then
+echo "[INFO] Removing all unofficial docker packages."
+for pkg in docker.io docker-doc docker-compose docker-compose-v2 podman-docker containerd runc; do
+	(sudo apt-get remove $pkg) || true
+done
+echo "[INFO] Removed all unofficial docker packages."
+
+echo
+echo
+
+if (which docker > /dev/null 2>&1); then
+	echo "[INFO] docker already installed, passing."
 else
+	echo "[INFO] Starting docker installation!"
+ 	# Add Docker's official GPG key:
+	sudo apt-get update
+	sudo apt-get install ca-certificates curl
+	sudo install -m 0755 -d /etc/apt/keyrings
+	sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+	sudo chmod a+r /etc/apt/keyrings/docker.asc
+	
+	# Add the repository to Apt sources:
+	echo \
+	  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+	  $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}") stable" | \
+	  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+	sudo apt-get update
+
+ 	# Install the latest version:
+  	sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+	# And verify:
+ 	sudo docker run hello-world
+  	echo "[INFO] Finished docker installation!"
 fi
+
+echo
+echo
 
 echo "[INFO] Disabling mouse acceleration."
 gsettings set org.gnome.desktop.peripherals.mouse accel-profile flat
@@ -213,40 +254,37 @@ echo "[INFO] cd-ed out of ./tmp/"
 echo
 echo
 
-if (which tree > /dev/null 2>&1); then
-	echo "[INFO] tree already installed, passing."
+if ([ -e "../was_installed" ]); then
+	echo "[INFO] Installer already ran on this machine. Skipping one-time configs."
 else
-	echo "[INFO] Starting tree installation!"
-	sudo apt-get install -y tree
-	echo "[INFO] Finished tree installation!"
-fi
-
-echo
-echo
-
-echo "[INFO] Copying dotfiles to $HOME."
-echo "[INFO] Previous directory structure is:"
-tree -al $HOME
-cd overwrite
-cp -r --parents $(find) $HOME
-cd ..
-if (cd append); then
-	cd append
-	while read line; do
-		cat $line >> $HOME/$line
-	done < <(find -type f)
+	if (which tree > /dev/null 2>&1); then
+		echo "[INFO] tree already installed, passing."
+	else
+		echo "[INFO] Starting tree installation!"
+		sudo apt-get install -y tree
+		echo "[INFO] Finished tree installation!"
+	fi
+	
+	echo
+	echo
+	
+	echo "[INFO] Copying dotfiles to $HOME."
+	echo "[INFO] Previous directory structure is:"
+	tree -al $HOME
+	cd overwrite
+	cp -r --parents $(find) $HOME
 	cd ..
- fi
-echo "[INFO] Copied dotfiles to $HOME."
-echo "[INFO] Modified directory structure is:"
-tree -al $HOME
-
-echo
-echo
-
-echo "[INFO] Starting syncthing service."
-systemctl --user enable syncthing.service
-systemctl --user start syncthing.service
+	if (cd append); then
+		cd append
+		while read line; do
+			cat $line >> $HOME/$line
+		done < <(find -type f)
+		cd ..
+	 fi
+	echo "[INFO] Copied dotfiles to $HOME."
+	echo "[INFO] Modified directory structure is:"
+	tree -al $HOME
+fi
 
 echo
 echo
@@ -258,5 +296,9 @@ echo
 echo
 
 touch was_installed
+echo "[INFO] Remembered we've bootstrapped this machine."
+
+echo
+echo
 
 echo "[INFO] Finished installer!"
