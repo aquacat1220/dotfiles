@@ -267,6 +267,9 @@ else
   	sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 	# And verify:
  	sudo docker run hello-world
+	# Then allow non-root users to use docker.
+	(sudo groupadd docker) || true # Command might fail if `docker` group already exists.`
+	sudo usermod -aG docker $USER # This doesn't fail even if user is already part of the group.
   	echo "[INFO] Finished docker installation!"
 fi
 
@@ -367,3 +370,4 @@ echo
 echo
 
 echo "[INFO] Finished installer!"
+echo "[INFO] Restart the machine for starship, non-root docker, and nvidia container toolkit to work properly!"
