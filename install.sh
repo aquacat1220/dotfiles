@@ -275,7 +275,7 @@ echo
 
 echo "[INFO] Installing latest drivers."
 sudo apt-get update
-sudo apt-get upgrade -y
+sudo apt-get full-upgrade -y
 sudo ubuntu-drivers install
 echo "[INFO] Installed latest drivers."
 
