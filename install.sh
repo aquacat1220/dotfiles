@@ -110,7 +110,12 @@ else
 	sed -i "s|Exec=kitty|Exec=/home/$USER/.local/kitty.app/bin/kitty|g" ~/.local/share/applications/kitty*.desktop
 	echo "[INFO] Finished kitty desktop integration."
 	sudo update-alternatives --install /usr/bin/x-terminal-emulator x-terminal-emulator ~/.local/bin/kitty 50
-	echo "[INFO] Set kitty as the default terminal."
+ 	echo "[INFO] Go to "https://github.com/Stunkymonkey/nautilus-open-any-terminal/releases" and download the latest .deb under ./tmp/"
+	read -p "[INFO] Press Enter when ready."
+ 	sudo apt install ./nautilus-extension-any-terminal*.deb -y
+	gsettings set com.github.stunkymonkey.nautilus-open-any-terminal terminal 'kitty'
+ 	nautilus -q
+  	echo "[INFO] Made kitty the default terminal for gnome and nautilus."
 fi
 
 echo
