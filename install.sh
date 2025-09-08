@@ -66,6 +66,19 @@ echo "[INFO] Started syncthing service."
 
 echo
 echo
+
+if (git lfs > /dev/null 2>&1); then
+	echo "[INFO] git-lfs already installed, passing."
+else
+	echo "[INFO] Starting git-lfs installation!"
+	curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash
+	sudo apt-get install -y git-lfs
+	git lfs install
+	echo "[INFO] Finished git-lfs installation!"
+fi
+
+echo
+echo
  	
 if (which xrdp > /dev/null 2>&1); then
 	echo "[INFO] xrdp already installed, passing."
