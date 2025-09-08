@@ -70,21 +70,22 @@ echo
 if (which xrdp > /dev/null 2>&1); then
 	echo "[INFO] xrdp already installed, passing."
 else
-	echo "[INFO] Starting xrdp installation!"
-	curl -L --output ./xrdp-installer.zip https://www.c-nergy.be/downloads/xRDP/xrdp-installer-1.4.8.zip
-	echo "[INFO] Downloaded xrdp-installer.zip."
- 	if (which unzip > /dev/null 2>&1); then
-  		echo "[INFO] unzip already installed, passing."
-        else
-		echo "[INFO] Starting unzip installation!"
-		sudo apt-get install -y unzip
-		echo "[INFO] Finished unzip installation!"
-        fi
-	unzip ./xrdp-installer.zip -d .
-	echo "[INFO] Unpacked xrdp-installer.zip."
-	chmod +x ./xrdp-installer*.sh
-	./xrdp-installer*.sh
-	echo "[INFO] Finished xrdp installation!"
+	echo "[INFO] Skipping xrdp."
+	# echo "[INFO] Starting xrdp installation!"
+	# curl -L --output ./xrdp-installer.zip https://www.c-nergy.be/downloads/xRDP/xrdp-installer-1.4.8.zip
+	# echo "[INFO] Downloaded xrdp-installer.zip."
+ # 	if (which unzip > /dev/null 2>&1); then
+ #  		echo "[INFO] unzip already installed, passing."
+ #        else
+	# 	echo "[INFO] Starting unzip installation!"
+	# 	sudo apt-get install -y unzip
+	# 	echo "[INFO] Finished unzip installation!"
+ #        fi
+	# unzip ./xrdp-installer.zip -d .
+	# echo "[INFO] Unpacked xrdp-installer.zip."
+	# chmod +x ./xrdp-installer*.sh
+	# ./xrdp-installer*.sh
+	# echo "[INFO] Finished xrdp installation!"
 fi
 
 echo
@@ -114,7 +115,8 @@ else
 	read -p "[INFO] Press Enter when ready."
  	sudo apt install ./nautilus-extension-any-terminal*.deb -y
 	gsettings set com.github.stunkymonkey.nautilus-open-any-terminal terminal 'kitty'
- 	nautilus -q
+ 	# nautilus -q
+    # No need to restart, as we'll restart this machine after this script anyways.
   	echo "[INFO] Made kitty the default terminal for gnome and nautilus."
 fi
 
