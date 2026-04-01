@@ -139,13 +139,27 @@ echo
 if (which fish > /dev/null 2>&1); then
 	echo "[INFO] fish already installed, passing."
 else
-	echo "[INFO] Starting fish installation!"
-	sudo apt-add-repository ppa:fish-shell/release-3
-	sudo apt update
-	sudo apt-get install -y fish
-	echo "[INFO] Setting fish as the default shell."
-	chsh -s $(which fish)
-	echo "[INFO] Finished fish installation!"
+	echo "[INFO] Skipping fish in favor of zsh."
+	# echo "[INFO] Starting fish installation!"
+	# sudo apt-add-repository ppa:fish-shell/release-3
+	# sudo apt update
+	# sudo apt-get install -y fish
+	# echo "[INFO] Setting fish as the default shell."
+	# chsh -s $(which fish)
+	# echo "[INFO] Finished fish installation!"
+fi
+
+echo
+echo
+
+if (which zsh > /dev/null 2>&1); then
+	echo "[INFO] zsh already installed, passing."
+else
+	echo "[INFO] Starting zsh installation!"
+	sudo apt-get install -y zsh
+	echo "[INFO] Setting zsh as the default shell."
+	chsh -s $(which zsh)
+	echo "[INFO] Finished zsh installation!"
 fi
 
 echo
