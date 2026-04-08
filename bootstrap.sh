@@ -46,7 +46,7 @@ else
 		echo "[INFO] ssh-keygen already installed, passing."
 	else
 		echo "[INFO] Starting ssh-keygen installation!"
-		sudo apt-get install -y openssh
+		sudo apt-get install -y openssh-client
 		echo "[INFO] Finished ssh-keygen installation!"
 	fi
 
