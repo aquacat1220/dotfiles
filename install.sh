@@ -26,127 +26,13 @@ cd tmp
 echo
 echo
 
-echo "[INFO] Starting language installation!"
-sudo apt-get install -y $(check-language-support -l ko)
-echo "[INFO] Finished language installation!"
-
-echo
-echo
-
-if (which curl > /dev/null 2>&1); then
-	echo "[INFO] curl already installed, passing."
-else
-	echo "[INFO] Starting curl installation!"
-	sudo apt-get install -y curl
-	echo "[INFO] Finished curl installation!"
-fi
-
-echo
-echo
-
-if (which syncthing > /dev/null 2>&1); then
-	echo "[INFO] syncthing already installed, passing."
-else
-	echo "[INFO] Starting syncthing installation!"
-  	sudo mkdir -p /etc/apt/keyrings
-   	sudo curl -L -o /etc/apt/keyrings/syncthing-archive-keyring.gpg https://syncthing.net/release-key.gpg
-    	echo "deb [signed-by=/etc/apt/keyrings/syncthing-archive-keyring.gpg] https://apt.syncthing.net/ syncthing stable" | sudo tee /etc/apt/sources.list.d/syncthing.list
-     	sudo apt-get update
-	sudo apt-get install -y syncthing
- 	echo "[INFO] Finished syncthing installation!"
-fi
-
-echo
-echo
-
-echo "[INFO] Starting syncthing service."
-systemctl --user enable syncthing.service
-systemctl --user start syncthing.service
-echo "[INFO] Started syncthing service."
-
-echo
-echo
-
 if (git lfs > /dev/null 2>&1); then
 	echo "[INFO] git-lfs already installed, passing."
 else
 	echo "[INFO] Starting git-lfs installation!"
-	curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash
-	sudo apt-get install -y git-lfs
+	pkg install -y git-lfs
 	git lfs install
 	echo "[INFO] Finished git-lfs installation!"
-fi
-
-echo
-echo
- 	
-if (which xrdp > /dev/null 2>&1); then
-	echo "[INFO] xrdp already installed, passing."
-else
-	echo "[INFO] Skipping xrdp."
-	# echo "[INFO] Starting xrdp installation!"
-	# curl -L --output ./xrdp-installer.zip https://www.c-nergy.be/downloads/xRDP/xrdp-installer-1.4.8.zip
-	# echo "[INFO] Downloaded xrdp-installer.zip."
- # 	if (which unzip > /dev/null 2>&1); then
- #  		echo "[INFO] unzip already installed, passing."
- #        else
-	# 	echo "[INFO] Starting unzip installation!"
-	# 	sudo apt-get install -y unzip
-	# 	echo "[INFO] Finished unzip installation!"
- #        fi
-	# unzip ./xrdp-installer.zip -d .
-	# echo "[INFO] Unpacked xrdp-installer.zip."
-	# chmod +x ./xrdp-installer*.sh
-	# ./xrdp-installer*.sh
-	# echo "[INFO] Finished xrdp installation!"
-fi
-
-echo
-echo
-
-if (which kitty > /dev/null 2>&1); then
-	echo "[INFO] kitty already installed, passing."
-else
-	echo "[INFO] Starting kitty installation!"
-	curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
-	echo "[INFO] Finished kitty installation!"
-	mkdir -p ~/.local/bin ~/.local/share/applications
- 	export PATH=$PATH:~/.local/bin
-	# Create symbolic links to add kitty and kitten to PATH (assuming ~/.local/bin is in
-	# your system-wide PATH)
-	ln -sf ~/.local/kitty.app/bin/kitty ~/.local/kitty.app/bin/kitten ~/.local/bin/
-	# Place the kitty.desktop file somewhere it can be found by the OS
-	cp ~/.local/kitty.app/share/applications/kitty.desktop ~/.local/share/applications/
-	# If you want to open text files and images in kitty via your file manager also add the kitty-open.desktop file
-	cp ~/.local/kitty.app/share/applications/kitty-open.desktop ~/.local/share/applications/
-	# Update the paths to the kitty and its icon in the kitty.desktop file(s)
-	sed -i "s|Icon=kitty|Icon=/home/$USER/.local/kitty.app/share/icons/hicolor/256x256/apps/kitty.png|g" ~/.local/share/applications/kitty*.desktop
-	sed -i "s|Exec=kitty|Exec=/home/$USER/.local/kitty.app/bin/kitty|g" ~/.local/share/applications/kitty*.desktop
-	echo "[INFO] Finished kitty desktop integration."
-	sudo update-alternatives --install /usr/bin/x-terminal-emulator x-terminal-emulator ~/.local/bin/kitty 50
- 	echo "[ACTION] Go to "https://github.com/Stunkymonkey/nautilus-open-any-terminal/releases" and download the latest .deb under ./tmp/"
-	read -p "[ACTION] Press Enter when ready."
- 	sudo apt install ./nautilus-extension-any-terminal*.deb -y
-	gsettings set com.github.stunkymonkey.nautilus-open-any-terminal terminal 'kitty'
- 	# nautilus -q
-    # No need to restart, as we'll restart this machine after this script anyways.
-  	echo "[INFO] Made kitty the default terminal for gnome and nautilus."
-fi
-
-echo
-echo
-
-if (which fish > /dev/null 2>&1); then
-	echo "[INFO] fish already installed, passing."
-else
-	echo "[INFO] Skipping fish in favor of zsh."
-	# echo "[INFO] Starting fish installation!"
-	# sudo apt-add-repository ppa:fish-shell/release-3
-	# sudo apt update
-	# sudo apt-get install -y fish
-	# echo "[INFO] Setting fish as the default shell."
-	# chsh -s $(which fish)
-	# echo "[INFO] Finished fish installation!"
 fi
 
 echo
@@ -156,39 +42,10 @@ if (which zsh > /dev/null 2>&1); then
 	echo "[INFO] zsh already installed, passing."
 else
 	echo "[INFO] Starting zsh installation!"
-	sudo apt-get install -y zsh
+	pkg install -y zsh
 	echo "[INFO] Setting zsh as the default shell."
 	chsh -s $(which zsh)
 	echo "[INFO] Finished zsh installation!"
-fi
-
-echo
-echo
-
-if (which fc-list > /dev/null 2>&1); then
-	echo "[INFO] fc-list already installed, passing."
-else
-	echo "[INFO] Starting fc-list installation!"
-	sudo apt-get install -y fontconfig
-	echo "[INFO] Finished fc-list installation!"
-fi
-
-echo
-echo
-
-if (fc-list | grep HackNerdFont > /dev/null 2>&1); then
-	echo "[INFO] HackNerdFont already installed, passing."
-else
-	echo "[INFO] Starting HackNerdFont installation!"
-	curl -L --output ./Hack.zip https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/Hack.zip
-	echo "[INFO] Downloaded Hack.zip."
-	unzip ./Hack.zip -d .
-	echo "[INFO] Unpacked Hack.zip."
-	mkdir -p ~/.local/share/fonts
-	mv ./HackNerdFont-*.ttf ~/.local/share/fonts
-	echo "[INFO] Finished local HackNerdFont installation!"
-	fc-cache -f
-	echo "[INFO] Rebuilt font caches."
 fi
 
 echo
@@ -198,154 +55,9 @@ if (which starship > /dev/null 2>&1); then
 	echo "[INFO] starship already installed, passing."
 else
 	echo "[INFO] Starting starship installation!"
-	curl -sS https://starship.rs/install.sh | sh
+	pkg install starship
 	echo "[INFO] Finished starship installation!"
 fi
-
-echo
-echo
-
-if (which tmux > /dev/null 2>&1); then
-	echo "[INFO] tmux already installed, passing."
-else
-	echo "[INFO] Skipping tmux."
-	# echo "[INFO] Starting tmux installation!"
-	# sudo apt-get install -y tmux
-	# echo "[INFO] Finished tmux installation!"
-fi
-
-echo
-echo
-
-if (ls ~/.tmux/plugins/tpm > /dev/null 2>&1); then
-	echo "[INFO] tpm already installed, passing."
-else
-	echo "[INFO] Skipping tpm."
-	# echo "[INFO] Starting tpm installation!"
-	# git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-	# echo "[INFO] Finished tpm installation!"
-fi
-
-echo
-echo
-
-if (which nvim > /dev/null 2>&1); then
-	echo "[INFO] nvim already installed, passing."
-else
-	echo "[INFO] Skipping nvim."
-fi
-
-echo
-echo
-
-if (which code > /dev/null 2>&1); then
-	echo "[INFO] code already installed, passing."
-else
-	echo "[INFO] Starting code installation!"
-	sudo apt-get install wget gpg
-	wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
-	sudo install -D -o root -g root -m 644 packages.microsoft.gpg /etc/apt/keyrings/packages.microsoft.gpg
-	echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" |sudo tee /etc/apt/sources.list.d/vscode.list > /dev/null
-	rm -f packages.microsoft.gpg
-	
-	sudo apt install apt-transport-https
-	sudo apt update
-	sudo apt install code
-	echo "[INFO] Finished code installation!"
-fi
-
-echo
-echo
-
-if (which obsidian > /dev/null 2>&1); then
-	echo "[INFO] obsidian already installed, passing."
-else
-	echo "[INFO] Starting obsidian installation!"
-	echo "[ACTION] Go to "https://obsidian.md/download" and download the latest .deb under ./tmp/"
-	read -p "[ACTION] Press Enter when ready."
-	sudo dpkg -i obsidian*.deb 
-	echo "[INFO] Finished obsidian installation!"
-fi
-
-echo
-echo
-
-echo "[INFO] Removing all unofficial docker packages."
-for pkg in docker.io docker-doc docker-compose docker-compose-v2 podman-docker containerd runc; do
-	(sudo apt-get remove $pkg) || true
-done
-echo "[INFO] Removed all unofficial docker packages."
-
-echo
-echo
-
-if (which docker > /dev/null 2>&1); then
-	echo "[INFO] docker already installed, passing."
-else
-	echo "[INFO] Starting docker installation!"
- 	# Add Docker's official GPG key:
-	sudo apt-get update
-	sudo apt-get install ca-certificates curl
-	sudo install -m 0755 -d /etc/apt/keyrings
-	sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
-	sudo chmod a+r /etc/apt/keyrings/docker.asc
-	
-	# Add the repository to Apt sources:
-	echo \
-	  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
-	  $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}") stable" | \
-	  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-	sudo apt-get update
-
- 	# Install the latest version:
-  	sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-	# And verify:
- 	sudo docker run hello-world
-	# Then allow non-root users to use docker.
-	(sudo groupadd docker) || true # Command might fail if `docker` group already exists.`
-	sudo usermod -aG docker $USER # This doesn't fail even if user is already part of the group.
-  	echo "[INFO] Finished docker installation!"
-fi
-
-echo
-echo
-
-echo "[INFO] Installing latest drivers."
-sudo apt-get update
-sudo apt-get full-upgrade -y
-sudo ubuntu-drivers install
-echo "[INFO] Installed latest drivers."
-
-echo
-echo
-
-if (dpkg -l nvidia-container-toolkit > /dev/null 2>&1); then
-	echo "[INFO] nvidia container toolkit. already installed, passing."
-else
-	echo "[INFO] Installing nvidia container toolkit."
-	curl -fsSL https://nvidia.github.io/libnvidia-container/gpgkey | sudo gpg --dearmor -o /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg \
-	  && curl -s -L https://nvidia.github.io/libnvidia-container/stable/deb/nvidia-container-toolkit.list | \
-	    sed 's#deb https://#deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://#g' | \
-	    sudo tee /etc/apt/sources.list.d/nvidia-container-toolkit.list
-	sudo apt-get update
-	sudo apt-get install -y nvidia-container-toolkit
-	echo "[INFO] Installed nvidia container toolkit."
-fi
-
-echo
-echo
-
-echo "[INFO] Configuring docker with nvidia container toolkit."
-sudo nvidia-ctk runtime configure --runtime=docker
-sudo systemctl restart docker
-echo "[INFO] Configured docker with nvidia container toolkit."
-
-echo
-echo
-
-echo "[INFO] Disabling mouse acceleration."
-gsettings set org.gnome.desktop.peripherals.mouse accel-profile flat
-echo "[INFO] Disabled mouse acceleration."
 
 echo
 echo
@@ -363,7 +75,7 @@ else
 		echo "[INFO] tree already installed, passing."
 	else
 		echo "[INFO] Starting tree installation!"
-		sudo apt-get install -y tree
+		pkg install -y tree
 		echo "[INFO] Finished tree installation!"
 	fi
 	

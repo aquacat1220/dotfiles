@@ -29,58 +29,24 @@ echo
 if ([ -e "../was_bootstrapped" ]); then
 	echo "[INFO] Bootstrapper already ran on this machine."
 else
-	sudo apt-get update
+	pkg update
 	
 	if (which git > /dev/null 2>&1); then
 		echo "[INFO] git already installed, passing."
 	else
 		echo "[INFO] Starting git installation!"
-		sudo apt-get install -y git
+		pkg install -y git
 		echo "[INFO] Finished git installation!"
 	fi
 
 	echo
 	echo
- 
- 	# if (which pass > /dev/null 2>&1); then
-	# 	echo "[INFO] pass already installed, passing."
-	# else
-	# 	echo "[INFO] Starting pass installation!"
-	# 	sudo apt-get install -y pass
-	# 	echo "[INFO] Finished pass installation!"
-	# fi
-
- 	# if (pass > /dev/null 2>&1); then
-  	# 	echo "[INFO] pass is already initialized, meaning gpg must be installed too."
-    # 	else
-    #  		echo "[ACTION] Creating gpg key. Remember the ID."
-	# 	gpg --gen-key
-	# 	echo "[INFO] Created gpg key."
-		
-	# 	echo
-	# 	echo
-	
-	# 	echo "[INFO] Initializing pass."
-	# 	read -p "[ACTION] Enter the gpg ID used before: " gpg_id
-	# 	pass init $gpg_id
-	# 	echo "[INFO] Initialized pass."
-  	# fi
-		
-	# echo
-	# echo
-	
-	# echo "[INFO] Touching git configs for credentials."
-	# git config --global credential.credentialStore gpg
-	# echo "[INFO] Touched git configs for credentials."
-	
-	# echo
-	# echo
 
 	if (which ssh-keygen > /dev/null 2>&1); then
 		echo "[INFO] ssh-keygen already installed, passing."
 	else
 		echo "[INFO] Starting ssh-keygen installation!"
-		sudo apt-get install -y openssh-client
+		pkg install -y openssh
 		echo "[INFO] Finished ssh-keygen installation!"
 	fi
 
@@ -105,24 +71,9 @@ else
 		echo "[INFO] curl already installed, passing."
 	else
 		echo "[INFO] Starting curl installation!"
-		sudo apt-get install -y curl
+		pkg install -y curl
 		echo "[INFO] Finished curl installation!"
 	fi
-
-	# echo
-	# echo
-
- 	# if (which git-credential-manager > /dev/null 2>&1); then
-  	# 	echo "[INFO] gcm already installed, passing."
-    # 		git-credential-manager configure
-    # 	else
-	# 	echo "[INFO] Starting gcm installation!"
-	#  	echo "[ACTION] Go to "https://github.com/git-ecosystem/git-credential-manager/releases/latest" and download the latest .deb under ./tmp/"
-	#   	read -p "[ACTION] Press Enter when ready."
-	#    	sudo dpkg -i gcm-linux_amd64.*.deb 
-	# 	git-credential-manager configure
-	# 	echo "[INFO] Finished gcm installation and configuration!"
-	# fi
  
 	echo
 	echo
@@ -146,7 +97,7 @@ if ([ -d "dotfiles" ]); then
 	echo "[INFO] dotfiles repo is already cloned, and this run is likely occuring inside it."
 else
 	echo "[INFO] Clone this repo to ~."
-	git clone https://github.com/aquacat1220/dotfiles.git
+	git clone -b termux git://github.com/aquacat1220/dotfiles.git
 fi
 
 echo
