@@ -58,7 +58,7 @@ else
 	ssh-keygen
 	read -p "[ACTION] Enter path to generated key (defaults to ~/.ssh/id_ed25519 if left blank): " key_path
 	if [ -z "$key_path" ]; then
-		key_path="~/.ssh/id_ed25519"
+		key_path="$HOME/.ssh/id_ed25519"
 	fi
 	ssh-add $key_path
 	echo "[INFO] Added key to ssh-agent."
