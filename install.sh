@@ -71,20 +71,6 @@ echo
 if ([ -e "../was_installed" ]); then
 	echo "[INFO] Installer already ran on this machine. Skipping one-time configs."
 else
-	if (which tree > /dev/null 2>&1); then
-		echo "[INFO] tree already installed, passing."
-	else
-		echo "[INFO] Starting tree installation!"
-		pkg install -y tree
-		echo "[INFO] Finished tree installation!"
-	fi
-	
-	echo
-	echo
-	
-	echo "[INFO] Copying dotfiles to $HOME."
-	echo "[INFO] Previous directory structure is:"
-	tree -al $HOME
 	cd overwrite
 	cp -r --parents $(find) $HOME
 	cd ..
