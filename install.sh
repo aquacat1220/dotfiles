@@ -82,8 +82,6 @@ else
 		cd ..
 	 fi
 	echo "[INFO] Copied dotfiles to $HOME."
-	echo "[INFO] Modified directory structure is:"
-	tree -al $HOME
 fi
 
 echo
