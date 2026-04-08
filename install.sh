@@ -30,7 +30,7 @@ if (git lfs > /dev/null 2>&1); then
 	echo "[INFO] git-lfs already installed, passing."
 else
 	echo "[INFO] Starting git-lfs installation!"
-	pkg install -y git-lfs
+	sudo apt-get install -y git-lfs
 	git lfs install
 	echo "[INFO] Finished git-lfs installation!"
 fi
@@ -42,7 +42,7 @@ if (which zsh > /dev/null 2>&1); then
 	echo "[INFO] zsh already installed, passing."
 else
 	echo "[INFO] Starting zsh installation!"
-	pkg install -y zsh
+	sudo apt-get install -y zsh
 	echo "[INFO] Setting zsh as the default shell."
 	chsh -s $(which zsh)
 	echo "[INFO] Finished zsh installation!"
@@ -55,7 +55,7 @@ if (which starship > /dev/null 2>&1); then
 	echo "[INFO] starship already installed, passing."
 else
 	echo "[INFO] Starting starship installation!"
-	pkg install starship
+	curl -sS https://starship.rs/install.sh | sh
 	echo "[INFO] Finished starship installation!"
 fi
 

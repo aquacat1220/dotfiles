@@ -29,13 +29,13 @@ echo
 if ([ -e "../was_bootstrapped" ]); then
 	echo "[INFO] Bootstrapper already ran on this machine."
 else
-	pkg update
+	sudo apt-get update
 	
 	if (which git > /dev/null 2>&1); then
 		echo "[INFO] git already installed, passing."
 	else
 		echo "[INFO] Starting git installation!"
-		pkg install -y git
+		sudo apt-get install -y git
 		echo "[INFO] Finished git installation!"
 	fi
 
@@ -46,7 +46,7 @@ else
 		echo "[INFO] ssh-keygen already installed, passing."
 	else
 		echo "[INFO] Starting ssh-keygen installation!"
-		pkg install -y openssh
+		sudo apt-get install -y openssh
 		echo "[INFO] Finished ssh-keygen installation!"
 	fi
 
@@ -74,7 +74,7 @@ else
 		echo "[INFO] curl already installed, passing."
 	else
 		echo "[INFO] Starting curl installation!"
-		pkg install -y curl
+		sudo apt-get install -y curl
 		echo "[INFO] Finished curl installation!"
 	fi
  
@@ -100,7 +100,7 @@ if ([ -d "dotfiles" ]); then
 	echo "[INFO] dotfiles repo is already cloned, and this run is likely occuring inside it."
 else
 	echo "[INFO] Clone this repo to ~."
-	git clone -b termux git://github.com/aquacat1220/dotfiles.git
+	git clone -b proot-distro git://github.com/aquacat1220/dotfiles.git
 fi
 
 echo
