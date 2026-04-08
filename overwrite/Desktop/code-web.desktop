@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=code-web
+Comment=
+Exec=pdrun code serve-web --without-connection-token
+Icon=
+Path=
+Terminal=true
+StartupNotify=false

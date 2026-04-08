@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=code-web
+Comment=
+Exec=pdrun code --wait --no-sandbox
+Icon=
+Path=
+Terminal=false
+StartupNotify=false
