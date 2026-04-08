@@ -42,37 +42,61 @@ else
 	echo
 	echo
  
- 	if (which pass > /dev/null 2>&1); then
-		echo "[INFO] pass already installed, passing."
+ 	# if (which pass > /dev/null 2>&1); then
+	# 	echo "[INFO] pass already installed, passing."
+	# else
+	# 	echo "[INFO] Starting pass installation!"
+	# 	sudo apt-get install -y pass
+	# 	echo "[INFO] Finished pass installation!"
+	# fi
+
+ 	# if (pass > /dev/null 2>&1); then
+  	# 	echo "[INFO] pass is already initialized, meaning gpg must be installed too."
+    # 	else
+    #  		echo "[ACTION] Creating gpg key. Remember the ID."
+	# 	gpg --gen-key
+	# 	echo "[INFO] Created gpg key."
+		
+	# 	echo
+	# 	echo
+	
+	# 	echo "[INFO] Initializing pass."
+	# 	read -p "[ACTION] Enter the gpg ID used before: " gpg_id
+	# 	pass init $gpg_id
+	# 	echo "[INFO] Initialized pass."
+  	# fi
+		
+	# echo
+	# echo
+	
+	# echo "[INFO] Touching git configs for credentials."
+	# git config --global credential.credentialStore gpg
+	# echo "[INFO] Touched git configs for credentials."
+	
+	# echo
+	# echo
+
+	if (which ssh-keygen > /dev/null 2>&1); then
+		echo "[INFO] ssh-keygen already installed, passing."
 	else
-		echo "[INFO] Starting pass installation!"
-		sudo apt-get install -y pass
-		echo "[INFO] Finished pass installation!"
+		echo "[INFO] Starting ssh-keygen installation!"
+		sudo apt-get install -y openssh-client
+		echo "[INFO] Finished ssh-keygen installation!"
 	fi
 
- 	if (pass > /dev/null 2>&1); then
-  		echo "[INFO] pass is already initialized, meaning gpg must be installed too."
-    	else
-     		echo "[INFO] Creating gpg key. Remember the ID."
-		gpg --gen-key
-		echo "[INFO] Created gpg key."
-		
-		echo
-		echo
-	
-		echo "[INFO] Initializing pass."
-		read -p "Enter the gpg ID used before: " gpg_id
-		pass init $gpg_id
-		echo "[INFO] Initialized pass."
-  	fi
-		
 	echo
 	echo
-	
-	echo "[INFO] Touching git configs for credentials."
-	git config --global credential.credentialStore gpg
-	echo "[INFO] Touched git configs for credentials."
-	
+
+	echo "[INFO] Starting ssh key generation!"
+	echo "[ACTION] Remember where you store the generated key."
+	ssh-keygen
+	read -p "[ACTION] Enter path to generated key (defaults to ~/.ssh/id_ed25519 if left blank): " key_path
+	ssh-add $key_path
+	echo "[INFO] Added key to ssh-agent."
+	echo "[ACTION] Copy the following content to https://github.com/settings/ssh/new to register the key."
+	read -p "[ACTION] Press Enter when ready."
+	echo "[INFO] Finished ssh key generation and registration!"
+
 	echo
 	echo
 
@@ -84,20 +108,20 @@ else
 		echo "[INFO] Finished curl installation!"
 	fi
 
-	echo
-	echo
+	# echo
+	# echo
 
- 	if (which git-credential-manager > /dev/null 2>&1); then
-  		echo "[INFO] gcm already installed, passing."
-    		git-credential-manager configure
-    	else
-		echo "[INFO] Starting gcm installation!"
-	 	echo "[INFO] Go to "https://github.com/git-ecosystem/git-credential-manager/releases/latest" and download the latest .deb under ./tmp/"
-	  	read -p "[INFO] Press Enter when ready."
-	   	sudo dpkg -i gcm-linux_amd64.*.deb 
-		git-credential-manager configure
-		echo "[INFO] Finished gcm installation and configuration!"
-	fi
+ 	# if (which git-credential-manager > /dev/null 2>&1); then
+  	# 	echo "[INFO] gcm already installed, passing."
+    # 		git-credential-manager configure
+    # 	else
+	# 	echo "[INFO] Starting gcm installation!"
+	#  	echo "[ACTION] Go to "https://github.com/git-ecosystem/git-credential-manager/releases/latest" and download the latest .deb under ./tmp/"
+	#   	read -p "[ACTION] Press Enter when ready."
+	#    	sudo dpkg -i gcm-linux_amd64.*.deb 
+	# 	git-credential-manager configure
+	# 	echo "[INFO] Finished gcm installation and configuration!"
+	# fi
  
 	echo
 	echo

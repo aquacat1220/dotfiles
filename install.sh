@@ -124,8 +124,8 @@ else
 	sed -i "s|Exec=kitty|Exec=/home/$USER/.local/kitty.app/bin/kitty|g" ~/.local/share/applications/kitty*.desktop
 	echo "[INFO] Finished kitty desktop integration."
 	sudo update-alternatives --install /usr/bin/x-terminal-emulator x-terminal-emulator ~/.local/bin/kitty 50
- 	echo "[INFO] Go to "https://github.com/Stunkymonkey/nautilus-open-any-terminal/releases" and download the latest .deb under ./tmp/"
-	read -p "[INFO] Press Enter when ready."
+ 	echo "[ACTION] Go to "https://github.com/Stunkymonkey/nautilus-open-any-terminal/releases" and download the latest .deb under ./tmp/"
+	read -p "[ACTION] Press Enter when ready."
  	sudo apt install ./nautilus-extension-any-terminal*.deb -y
 	gsettings set com.github.stunkymonkey.nautilus-open-any-terminal terminal 'kitty'
  	# nautilus -q
@@ -261,8 +261,8 @@ if (which obsidian > /dev/null 2>&1); then
 	echo "[INFO] obsidian already installed, passing."
 else
 	echo "[INFO] Starting obsidian installation!"
-	echo "[INFO] Go to "https://obsidian.md/download" and download the latest .deb under ./tmp/"
-	read -p "[INFO] Press Enter when ready."
+	echo "[ACTION] Go to "https://obsidian.md/download" and download the latest .deb under ./tmp/"
+	read -p "[ACTION] Press Enter when ready."
 	sudo dpkg -i obsidian*.deb 
 	echo "[INFO] Finished obsidian installation!"
 fi
@@ -398,7 +398,7 @@ echo
 echo
 
 touch was_installed
-echo "[INFO] Remembered we've bootstrapped this machine."
+echo "[INFO] Remembered we've installed to this machine."
 
 echo
 echo
