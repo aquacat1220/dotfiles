@@ -44,7 +44,7 @@ else
 	echo "[INFO] Starting zsh installation!"
 	pkg install -y zsh
 	echo "[INFO] Setting zsh as the default shell."
-	chsh -s $(which zsh)
+	chsh -s zsh
 	echo "[INFO] Finished zsh installation!"
 fi
 
