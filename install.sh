@@ -106,7 +106,7 @@ echo
 echo "[INFO] Starting panel setup!"
 pkg install -y xfce4-whiskermenu-plugin
 pkg install -y xfce4-docklike-plugin
-xfce-panel-profiles load panel.tar.bz2
+xfce4-panel-profiles load panel.tar.bz2
 echo "[INFO] Finished panel setup!"
 
 echo
