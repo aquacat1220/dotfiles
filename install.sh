@@ -91,12 +91,12 @@ echo "[INFO] Starting theme installation!"
 git clone https://github.com/vinceliuice/Orchis-theme
 cd Orchis-theme
 ./install.sh --theme yellow
-xfconf-query -c xsettings -n -p /Gdk/WindowScalingFactor -s 2
-xfconf-query -c xsettings -n -p /Net/ThemeName -s Orchis-Yellow-Dark-Compact
-xfconf-query -c xsettings -n -p /Net/IconThemeName -s Tela-circle-dark
-xfconf-query -c xsettings -n -p /Xfce/SyncThemes -s true
-xfconf-query -c xfwm4 -n -p /general/theme -s Orchis-Yellow-Dark-Compact
-xfconf-query -c xfce4-desktop -n -p /backdrop/screen0/monitorbuiltin/workspace0/last-image -s ~/dotfiles/wallpaper.jpg
+xfconf-query -c xsettings -p /Gdk/WindowScalingFactor -s 2
+xfconf-query -c xsettings -p /Net/ThemeName -s Orchis-Yellow-Dark-Compact
+xfconf-query -c xsettings -p /Net/IconThemeName -s Tela-circle-dark
+xfconf-query -c xsettings -p /Xfce/SyncThemes -n -t "bool" -s true
+xfconf-query -c xfwm4 -p /general/theme -s Orchis-Yellow-Dark-Compact
+xfconf-query -c xfce4-desktop -p /backdrop/screen0/monitorbuiltin/workspace0/last-image -n -t "string" -s ~/dotfiles/wallpaper.jpg
 cd ..
 echo "[INFO] Finished theme installation!"
 
