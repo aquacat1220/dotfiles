@@ -91,14 +91,22 @@ echo "[INFO] Starting theme installation!"
 git clone https://github.com/vinceliuice/Orchis-theme
 cd Orchis-theme
 ./install.sh --theme yellow
+cd ..
+echo "[INFO] Finished theme installation!"
+
+echo "[INFO] Starting icon installation!"
+git clone https://github.com/vinceliuice/Tela-circle-icon-theme.git
+cd Tela-circle-icon-theme
+./install.sh -d ~/.icons
+echo "[INFO] Finished icon installation!"
+
 xfconf-query -c xsettings -p /Gdk/WindowScalingFactor -s 2
 xfconf-query -c xsettings -p /Net/ThemeName -s Orchis-Yellow-Dark-Compact
 xfconf-query -c xsettings -p /Net/IconThemeName -s Tela-circle-dark
 xfconf-query -c xsettings -p /Xfce/SyncThemes -n -t "bool" -s true
 xfconf-query -c xfwm4 -p /general/theme -s Orchis-Yellow-Dark-Compact
 xfconf-query -c xfce4-desktop -p /backdrop/screen0/monitorbuiltin/workspace0/last-image -n -t "string" -s $dotfiles_root/wallpaper.jpg
-cd ..
-echo "[INFO] Finished theme installation!"
+
 
 echo
 echo
