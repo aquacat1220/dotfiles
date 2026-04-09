@@ -96,7 +96,7 @@ xfconf-query -c xsettings -p /Net/ThemeName -s Orchis-Yellow-Dark-Compact
 xfconf-query -c xsettings -p /Net/IconThemeName -s Tela-circle-dark
 xfconf-query -c xsettings -p /Xfce/SyncThemes -n -t "bool" -s true
 xfconf-query -c xfwm4 -p /general/theme -s Orchis-Yellow-Dark-Compact
-xfconf-query -c xfce4-desktop -p /backdrop/screen0/monitorbuiltin/workspace0/last-image -n -t "string" -s ~/dotfiles/wallpaper.jpg
+xfconf-query -c xfce4-desktop -p /backdrop/screen0/monitorbuiltin/workspace0/last-image -n -t "string" -s $dotfiles_root/wallpaper.jpg
 cd ..
 echo "[INFO] Finished theme installation!"
 
@@ -106,7 +106,7 @@ echo
 echo "[INFO] Starting panel setup!"
 pkg install -y xfce4-whiskermenu-plugin
 pkg install -y xfce4-docklike-plugin
-xfce4-panel-profiles load panel.tar.bz2
+xfce4-panel-profiles load $dotfiles_root/panel.tar.bz2
 echo "[INFO] Finished panel setup!"
 
 echo
