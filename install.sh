@@ -90,7 +90,11 @@ echo
 echo "[INFO] Starting theme installation!"
 git clone https://github.com/vinceliuice/Orchis-theme
 cd Orchis-theme
-./install.sh --theme yellow --icon ubuntu
+./install.sh --theme yellow
+xfconf-query -c xsettings -p /Net/ThemeName -s Orchis-Yellow-Dark-Compact
+xfconf-query -c xsettings -p /Net/IconThemeName -s Tela-circle-dark
+xfconf-query -c xsettings -p /Xfce/SyncThemes -s true
+xfconf-query -c xfwm4 -p /general/theme -s Orchis-Yellow-Dark-Compact
 cd ..
 echo "[INFO] Finished theme installation!"
 
