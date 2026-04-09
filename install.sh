@@ -81,6 +81,24 @@ fi
 echo
 echo
 
+if (fc-list | grep HackNerdFont > /dev/null 2>&1); then
+	echo "[INFO] HackNerdFont already installed, passing."
+else
+	echo "[INFO] Starting HackNerdFont installation!"
+	curl -L --output ./Hack.zip https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/Hack.zip
+	echo "[INFO] Downloaded Hack.zip."
+	unzip ./Hack.zip -d .
+	echo "[INFO] Unpacked Hack.zip."
+	mkdir -p ~/.local/share/fonts
+	mv ./HackNerdFont-*.ttf ~/.local/share/fonts
+	echo "[INFO] Finished local HackNerdFont installation!"
+	fc-cache -f
+	echo "[INFO] Rebuilt font caches."
+fi
+
+echo
+echo
+
 cd ..
 echo "[INFO] cd-ed out of ./tmp/"
 
