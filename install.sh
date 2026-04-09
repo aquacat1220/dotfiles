@@ -55,12 +55,44 @@ if (which starship > /dev/null 2>&1); then
 	echo "[INFO] starship already installed, passing."
 else
 	echo "[INFO] Starting starship installation!"
-	pkg install starship
+	pkg install -y starship
 	echo "[INFO] Finished starship installation!"
 fi
 
 echo
 echo
+
+echo "[INFO] Starting gnome-themes-extra installation!"
+pkg install -y gnome-themes-extra
+echo "[INFO] Finished gnome-themes-extra installation!"
+
+echo
+echo
+
+echo "[INFO] Starting gtk2-engines-murrine installation!"
+pkg install -y gtk2-engines-murrine
+echo "[INFO] Finished gtk2-engines-murrine installation!"
+
+echo
+echo
+
+if (which sassc > /dev/null 2>&1); then
+	echo "[INFO] sassc already installed, passing."
+else
+	echo "[INFO] Starting sassc installation!"
+	pkg install -y sassc
+	echo "[INFO] Finished sassc installation!"
+fi
+
+echo
+echo
+
+echo "[INFO] Starting theme installation!"
+git clone https://github.com/vinceliuice/Orchis-theme
+cd Orchis-theme
+./install.sh --theme yellow --icon ubuntu
+cd ..
+echo "[INFO] Finished theme installation!"
 
 cd ..
 echo "[INFO] cd-ed out of ./tmp/"
