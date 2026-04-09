@@ -101,7 +101,7 @@ if ([ -d "dotfiles" ]); then
 	echo "[INFO] dotfiles repo is already cloned, and this run is likely occuring inside it."
 else
 	echo "[INFO] Clone this repo to ~."
-	git clone -b proot-distro https://github.com/aquacat1220/dotfiles.git
+	git clone -b proot-distro git@github.com:aquacat1220/dotfiles.git
 fi
 
 echo
