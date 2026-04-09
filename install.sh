@@ -98,6 +98,18 @@ xfconf-query -c xfwm4 -p /general/theme -s Orchis-Yellow-Dark-Compact
 cd ..
 echo "[INFO] Finished theme installation!"
 
+echo
+echo
+
+echo "[INFO] Starting panel setup!"
+pkg install -y xfce4-whiskermenu-plugin
+pkg install -y xfce4-docklike-plugin
+xfce-panel-profiles load panel.tar.bz2
+echo "[INFO] Finished panel setup!"
+
+echo
+echo
+
 cd ..
 echo "[INFO] cd-ed out of ./tmp/"
 
