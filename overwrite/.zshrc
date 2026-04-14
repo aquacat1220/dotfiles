@@ -1,10 +1,3 @@
-# Download and start Znap, if it's not there yet.
-[[ -r ~/.zsh/plugins/znap/znap.zsh ]] ||
-    git clone --depth 1 -- \
-        https://github.com/marlonrichert/zsh-snap.git ~/.zsh/plugins/znap
-source ~/.zsh/plugins/znap/znap.zsh  # Start Znap
-# End of lines for Znap.
-
 # Lines configured by zsh-newuser-install.
 HISTFILE=~/.histfile
 HISTSIZE=1000
@@ -13,8 +6,7 @@ bindkey -e
 # End of lines configured by zsh-newuser-install.
 
 # Initiate starship with Znap.
-znap eval starship 'starship init zsh --print-full-init'
-znap prompt
+eval "$(starship init zsh)"
 # End of lines for starship.
 
 # Initiate autocomplete.
