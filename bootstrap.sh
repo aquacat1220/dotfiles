@@ -94,9 +94,10 @@ else
 	if [ -z "$key_path" ]; then
 		key_path="$HOME/.ssh/id_ed25519"
 	fi
-	eval "$(ssh-agent)"
-	ssh-add $key_path
-	echo "[INFO] Added key to ssh-agent."
+	# GNOME takes care of ssh agents
+	# eval "$(ssh-agent)"
+	# ssh-add $key_path
+	# echo "[INFO] Added key to ssh-agent."
 	echo "[ACTION] Copy the following content to https://github.com/settings/ssh/new to register the key."
 	cat "$key_path.pub"
 	read -p "[ACTION] Press Enter when ready."
